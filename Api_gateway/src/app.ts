@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 const GATEWAY = process.env.SERVICE_NAME;
 
 app.use('/api/v1/orders',proxy('http://localhost:3001'));
-app.use('/api/v1/products',proxy('http://localhost:3002'));
+app.use('/api/v1/inventory',proxy('http://localhost:3002'));
 
 
 app.listen(PORT, () => {
