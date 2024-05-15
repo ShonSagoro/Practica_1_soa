@@ -10,7 +10,7 @@ import java.util.List;
 @Getter @Setter
 public class Order {
 
-    private Long id;
+    private String uuid;
 
     private long total;
 

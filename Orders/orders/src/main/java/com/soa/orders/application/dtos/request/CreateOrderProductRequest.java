@@ -10,6 +10,6 @@ public class CreateOrderProductRequest {
 
     private Long quantity;
 
-    private Long product_id;
+    private String productUuid;
 
 }

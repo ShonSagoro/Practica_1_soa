@@ -18,8 +18,8 @@ public class UpdateOrderStatusUseCases {
     @Autowired
     private IOrderDtoMapper orderDtoMapper;
 
-    public BaseResponse excuse(Long id, UpdateOrderStatusRequest request) {
-        Order order = orderRepository.updateOrderStatus(id, request.getStatus());
+    public BaseResponse excuse(String uuid, UpdateOrderStatusRequest request) {
+        Order order = orderRepository.updateOrderStatus(uuid, request.getStatus());
         OrderResponse response = orderDtoMapper.toResponse(order);
         return BaseResponse.builder()
                 .data(response)

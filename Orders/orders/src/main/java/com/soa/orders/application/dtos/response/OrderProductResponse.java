@@ -5,11 +5,13 @@ import lombok.Setter;
 
 @Getter @Setter
 public class OrderProductResponse {
-    private Long id;
+    private String uuid;
 
     private Long price;
 
     private Long quantity;
 
-    private Long product_id;
+    private String productUuid;
+
+    private String orderUuid;
 }

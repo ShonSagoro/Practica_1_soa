@@ -31,13 +31,7 @@ public class CreateOrdersUseCases {
 
     public BaseResponse excuse(CreateOrderRequest request) {
         Order order = orderDtoMapper.toDomain(request);
-        List<OrderProduct> products = request.getProducts().stream()
-                .map(orderProductDtoMapper::toDomain)
-                .toList();
-        order.setTotal(getTotal(products));
-        order.setProducts(products);
-        products.forEach(orderProduct -> orderRepository.saveOrderProduct(orderProduct));
-        orderRepository.save(order);
+        order=orderRepository.save(order);
         OrderResponse orderResponse = orderDtoMapper.toResponse(order);
 
         return BaseResponse.builder()

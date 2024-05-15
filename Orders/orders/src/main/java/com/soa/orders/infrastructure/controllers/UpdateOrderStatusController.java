@@ -13,8 +13,8 @@ public class UpdateOrderStatusController {
     @Autowired
     private UpdateOrderStatusUseCases updateOrderStatusUseCases;
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse> update(@PathVariable Long id, @RequestBody UpdateOrderStatusRequest request) {
-        return updateOrderStatusUseCases.excuse(id, request).apply();
+    @PutMapping("/{uuid}")
+    public ResponseEntity<BaseResponse> update(@PathVariable String uuid, @RequestBody UpdateOrderStatusRequest request) {
+        return updateOrderStatusUseCases.excuse(uuid, request).apply();
     }
 }
