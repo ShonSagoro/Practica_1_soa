@@ -5,8 +5,9 @@ import { CreateInventoryUsecases } from './../application/useCases/CreateInvento
 import { MongoInventoryRepository } from "./repositories/MongoInventoryRepository";
 import { ListInventoryController } from './controllers/ListInventoryController';
 import { DeleteInventoryController } from './controllers/DeleteInventoryController';
+import { MysqlInventoryRepository } from './repositories/MysqlInventoryRepository';
 
-export const database = new MongoInventoryRepository();
+export const database = new MysqlInventoryRepository();
 
 export const createInventoryUsecases = new CreateInventoryUsecases(database);
 export const listInventoryUsecases = new ListInventoryUseCases(database);

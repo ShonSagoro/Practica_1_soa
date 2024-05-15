@@ -1,0 +1,7 @@
+
+CREATE TABLE IF NOT EXISTS inventories (
+    uuid VARCHAR(36) PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    stock VARCHAR(255),
+    price VARCHAR(255)
+);

@@ -5,7 +5,9 @@
   "main": "app.ts",
   "scripts": {
     "test": "jest --respawn --forceExit --detectOpenHandles --watchAll",
-    "dev": "ts-node-dev --respawn --transpile-only ./src/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only ./src/app.ts",
+    "migration_sql": "ts-node ./src/infrastructure/migrations/mysql_migrations/generateMigrations.ts"
+
   },
   "keywords": [],
   "author": "",
@@ -21,7 +23,9 @@
     "express-http-proxy": "^2.0.0",
     "mongodb": "^6.6.1",
     "morgan": "^1.10.0",
+    "mysql2": "^3.9.7",
     "nodemon": "^3.0.1",
+    "rabbitmq-client": "^4.5.4",
     "signale": "^1.4.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
