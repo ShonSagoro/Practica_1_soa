@@ -1,9 +1,11 @@
 package com.soa.orders.domain.models;
 
+import com.soa.orders.domain.models.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 public class Order {
@@ -14,6 +16,8 @@ public class Order {
 
     private Date date;
 
-    private String status;
+    private Status status;
+
+    private List<OrderProduct> products;
 
 }

@@ -2,6 +2,7 @@ package com.soa.orders.infrastructure.repositories;
 
 import com.soa.orders.domain.models.Order;
 import com.soa.orders.domain.models.OrderProduct;
+import com.soa.orders.domain.models.enums.Status;
 import com.soa.orders.domain.port.IOrderProductRepository;
 import com.soa.orders.domain.port.IOrderRepository;
 import com.soa.orders.infrastructure.dao.OrderEntity;
@@ -27,7 +28,7 @@ public class OrderRepository implements IOrderRepository {
     @Override
     public Order updateOrderStatus(Long orderId, String status) {
         OrderEntity orderEntity = jpaRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
-        orderEntity.setStatus(status);
+        orderEntity.setStatus(Status.valueOf(status));
         return orderMapper.toDomain(jpaRepository.save(orderEntity));
     }
 
@@ -38,6 +39,10 @@ public class OrderRepository implements IOrderRepository {
     }
     @Override
     public Order save(Order order) {
+        List<OrderProduct> savedProducts = order.getProducts().stream()
+                .map(orderProduct -> orderProductRepository.save(orderProduct))
+                .toList();
+        order.setProducts(savedProducts);
         OrderEntity orderEntity = orderMapper.toEntity(order);
         return orderMapper.toDomain(jpaRepository.save(orderEntity));
     }

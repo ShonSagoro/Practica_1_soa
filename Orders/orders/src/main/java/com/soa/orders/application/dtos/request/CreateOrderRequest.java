@@ -8,6 +8,5 @@ import java.util.List;
 @Getter
 @Setter
 public class CreateOrderRequest {
-    private String date;
     private List<CreateOrderProductRequest> products;
 }

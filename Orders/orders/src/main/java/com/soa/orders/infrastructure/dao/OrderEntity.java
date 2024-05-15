@@ -1,5 +1,6 @@
 package com.soa.orders.infrastructure.dao;
 
+import com.soa.orders.domain.models.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,9 +23,9 @@ public class OrderEntity {
     @Column(nullable = false)
     private Date date;
 
-    @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderProductEntity> order_products;
+    private List<OrderProductEntity> products;
 }

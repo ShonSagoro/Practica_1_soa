@@ -1,5 +1,6 @@
 package com.soa.orders.application.useCases;
 
+import com.soa.orders.application.dtos.mapper.IOrderDtoMapper;
 import com.soa.orders.application.dtos.response.BaseResponse;
 import com.soa.orders.application.dtos.response.OrderResponse;
 import com.soa.orders.domain.models.Order;
@@ -14,10 +15,12 @@ import java.util.List;
 public class GetOrdersUseCases {
     @Autowired
     private IOrderRepository orderRepository;
+    @Autowired
+    private IOrderDtoMapper orderDtoMapper;
 
     public BaseResponse excuse() {
         List<Order> orders = orderRepository.getOrders();
-        List<OrderResponse> responses = orders.stream().map(this::toResponse).toList();
+        List<OrderResponse> responses = orders.stream().map(orderDtoMapper::toResponse).toList();
         if (orders.isEmpty()) {
             return BaseResponse.builder()
                     .data(responses)
@@ -33,12 +36,5 @@ public class GetOrdersUseCases {
         }
     }
 
-    private OrderResponse toResponse(Order order) {
-        OrderResponse response = new OrderResponse();
-        response.setId(order.getId());
-        response.setDate(order.getDate().toString());
-        response.setStatus(order.getStatus());
-        response.setTotal(order.getTotal());
-        return response;
-    }
+
 }
