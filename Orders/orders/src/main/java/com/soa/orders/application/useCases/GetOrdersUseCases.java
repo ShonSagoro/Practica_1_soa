@@ -1,6 +1,6 @@
 package com.soa.orders.application.useCases;
 
-import com.soa.orders.application.dtos.mapper.IOrderDtoMapper;
+import com.soa.orders.application.mapper.IOrderDtoMapper;
 import com.soa.orders.application.dtos.response.BaseResponse;
 import com.soa.orders.application.dtos.response.OrderResponse;
 import com.soa.orders.domain.models.Order;

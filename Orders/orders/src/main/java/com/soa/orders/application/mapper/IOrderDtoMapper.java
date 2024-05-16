@@ -1,4 +1,4 @@
-package com.soa.orders.application.dtos.mapper;
+package com.soa.orders.application.mapper;
 
 import com.soa.orders.application.dtos.request.CreateOrderRequest;
 import com.soa.orders.application.dtos.response.OrderProductResponse;
@@ -6,6 +6,7 @@ import com.soa.orders.application.dtos.response.OrderResponse;
 import com.soa.orders.domain.models.Order;
 import com.soa.orders.domain.models.OrderProduct;
 import com.soa.orders.domain.models.enums.Status;
+import com.soa.orders.application.mapper.IOrderProductDtoMapper;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,6 @@
+import { Inventory } from './../../domain/model/Inventory';
 import { Collection } from "mongodb";
 import { InventoryInterface } from "../../domain/port/InventoryInterface";
-import { Inventory } from "../../domain/model/Inventory";
 import { connect } from "../../database/mongodb";
 
 
@@ -9,6 +9,38 @@ export class MongoInventoryRepository implements InventoryInterface {
 
     constructor() {
         this.initializeCollection();
+    }
+
+    async decreaseStock(uuid: string, stock: number): Promise<Inventory | null> {
+        try{
+            let order = await this.findByUuid(uuid);
+            if(order){
+                order.stock -= stock;
+                this.collection.updateOne({ uuid: order.uuid }, { $set: { stock: order.stock } });
+                return order;
+            }else{
+                return Promise.resolve(null);
+            }
+        }catch(error){
+            return Promise.resolve(null);
+        }
+        
+    }
+
+
+
+    async findByUuid(uuid: string): Promise<Inventory | null> {
+        try{
+            const result = await this.collection.findOne({ uuid: uuid });
+            if(result){
+                let inventory = new Inventory(result.name, result.price, result.stock);
+                inventory.uuid = result.uuid;
+                return inventory;
+            }
+            return Promise.resolve(null);
+        }catch (error) {
+            return Promise.resolve(null);
+        }
     }
     
     async create(inventory: Inventory): Promise<Inventory | null> {

@@ -7,7 +7,6 @@
     "test": "jest --respawn --forceExit --detectOpenHandles --watchAll",
     "dev": "ts-node-dev --respawn --transpile-only ./src/app.ts",
     "migration_sql": "ts-node ./src/infrastructure/migrations/mysql_migrations/generateMigrations.ts"
-
   },
   "keywords": [],
   "author": "",
@@ -17,6 +16,7 @@
     "@types/express-http-proxy": "^1.6.6",
     "@types/node": "^20.9.2",
     "@types/signale": "^1.4.7",
+    "amqplib": "^0.10.4",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.19.2",
@@ -32,6 +32,7 @@
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.5",
     "@types/cors": "^2.8.17",
     "@types/morgan": "^1.9.9",
     "typescript": "^5.4.5"

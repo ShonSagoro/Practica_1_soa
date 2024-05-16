@@ -1,4 +1,4 @@
-package com.soa.orders.application.dtos.mapper;
+package com.soa.orders.application.mapper;
 
 import com.soa.orders.application.dtos.request.CreateOrderProductRequest;
 import com.soa.orders.application.dtos.response.OrderProductResponse;

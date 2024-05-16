@@ -6,6 +6,7 @@ import cors from 'cors';
 import {Signale} from "signale";
 
 import { setupInventoryEndpoints } from './infrastructure/endpoints/InventoryEndpoints';
+import { DecreaceSoldProductUseCaseService } from './infrastructure/Dependencies';
 
 dotenv.config();
 
@@ -21,11 +22,18 @@ app.use(express.static(path.join(__dirname, './public/images')));
 app.use(express.json()); 
 app.use(morgan('dev'));
 setupInventoryEndpoints(app);
+let server = null;
 
 
-let server = app.listen(PORT, HOST, () => {
-    signale.success(`Server is running on http://${HOST}:${PORT}`);
-});
 
+async function startServer() {
+    await DecreaceSoldProductUseCaseService();
+    server = app.listen(PORT, HOST, () => {
+        signale.success(`Server is running on http://${HOST}:${PORT}`);
+    });
+    
+}
+
+startServer();
 
 export { app, server };

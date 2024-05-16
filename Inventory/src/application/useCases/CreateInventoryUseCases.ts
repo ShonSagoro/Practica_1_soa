@@ -9,9 +9,7 @@ export class CreateInventoryUsecases {
 
     async execute(request: CreateInventoryRequest): Promise<BaseResponse> {
         let inventory = new Inventory(request.name, request.price, request.stock);
-        console.log(inventory);
         let result = await this.repository.create(inventory);
-        console.log(result);
         if (result) {
             let response = new InventoryResponse(result.uuid, result.name, result.price, result.stock);
             return new BaseResponse(response, "Inventory created", true, 201);

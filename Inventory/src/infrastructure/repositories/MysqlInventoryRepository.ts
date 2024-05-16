@@ -3,6 +3,47 @@ import { Inventory } from "../../domain/model/Inventory";
 import { InventoryInterface } from "../../domain/port/InventoryInterface";
 
 export class MysqlInventoryRepository implements InventoryInterface {
+
+    async decreaseStock(uuid: string, stock: number): Promise<Inventory | null> {
+        console.log(uuid, stock);
+        try{
+            let product = await this.findByUuid(uuid);
+            console.log(product);
+            if(product){
+                console.log(product);
+                product.stock -= stock;
+                console.log(product);
+                let sql = `UPDATE inventories SET stock = ? WHERE uuid = ?`;
+                let params = [product.stock, product.uuid];
+                await query(sql, params);
+                return product;
+            }else{
+                console.log("nadota");
+                return Promise.resolve(null);
+            }
+        }catch(error){
+            console.log(error);
+            return Promise.resolve(null);
+        }
+    }
+
+   async findByUuid(uuid: string): Promise<Inventory | null> {
+        let sql = `SELECT * FROM inventories WHERE uuid = ?`;
+        let params = [uuid];
+        try{
+            const [result]: any = await query(sql, params);
+            if(result.length > 0){
+                let inventory = new Inventory(result[0].name, result[0].price, result[0].stock);
+                inventory.uuid = result[0].uuid;
+                return inventory;
+            }
+            return Promise.resolve(null);
+        }catch (error) {
+            console.log(error);
+            throw new Error('find by uuid error');
+        }
+    }
+
     async delete(uuid: string): Promise<void> {
         let sql = `DELETE FROM inventories WHERE uuid = ?`;
         let params = [uuid];

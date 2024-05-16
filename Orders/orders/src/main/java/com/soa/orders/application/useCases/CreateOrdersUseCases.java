@@ -1,21 +1,16 @@
 package com.soa.orders.application.useCases;
 
-import com.soa.orders.application.dtos.mapper.IOrderDtoMapper;
-import com.soa.orders.application.dtos.mapper.IOrderProductDtoMapper;
-import com.soa.orders.application.dtos.request.CreateOrderProductRequest;
+import com.soa.orders.application.mapper.IOrderDtoMapper;
+import com.soa.orders.application.mapper.IOrderProductDtoMapper;
 import com.soa.orders.application.dtos.request.CreateOrderRequest;
 import com.soa.orders.application.dtos.response.BaseResponse;
 import com.soa.orders.application.dtos.response.OrderResponse;
 import com.soa.orders.domain.models.Order;
 import com.soa.orders.domain.models.OrderProduct;
-import com.soa.orders.domain.models.enums.Status;
 import com.soa.orders.domain.port.IOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
