@@ -11,27 +11,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${rabbitmq.queue.name}")
-    private String queueName;
+    @Value("${rabbitmq.queue.name.tracking}")
+    private String inventoryQueue;
 
-    @Value("${rabbitmq.exchange.name}")
-    private String exchangeName;
+    @Value("${rabbitmq.exchange.name.tracking}")
+    private String orderExchange;
 
-    @Value("${rabbitmq.routing.key}")
-    private String routingKey;
+    @Value("${rabbitmq.routing.key.tracking}")
+    private String orderRoutingKey;
 
     @Bean
-    public Queue myQueue() {
-        return new Queue(queueName, true);
+    public Queue InventoryQueue() {
+        return new Queue(inventoryQueue, true);
     }
 
     @Bean
-    public DirectExchange myExchange() {
-        return new DirectExchange(exchangeName);
+    public DirectExchange OrderExchange() {
+        return new DirectExchange(orderExchange);
     }
 
     @Bean
-    public Binding binding(Queue myQueue, DirectExchange myExchange) {
-        return BindingBuilder.bind(myQueue).to(myExchange).with(routingKey);
+    public Binding OrderBinding() {
+        return BindingBuilder.bind(InventoryQueue()).to(OrderExchange()).with(orderRoutingKey);
     }
 }

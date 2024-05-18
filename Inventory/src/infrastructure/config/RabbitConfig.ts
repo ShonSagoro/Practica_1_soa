@@ -2,14 +2,14 @@ import amqp from 'amqplib';
 import dotenv from 'dotenv';
 
 
-const hostname=process.env.RABBITMQ_HOST||'localhost';
-const protocol=process.env.RABBITMQ_PROTOCOL;
-const user=process.env.RABBITMQ_USER;
-const password=process.env.RABBITMQ_PASS;
-const port=process.env.RABBITMQ_PORT;
+const hostname = process.env.RABBITMQ_HOST || 'localhost';
+const protocol = process.env.RABBITMQ_PROTOCOL;
+const user = process.env.RABBITMQ_USER;
+const password = process.env.RABBITMQ_PASS;
+const port = process.env.RABBITMQ_PORT;
 
 
-const rabbitSettings:any={
+const rabbitSettings: any = {
     protocol: protocol,
     hostname: hostname,
     port: port,
@@ -17,19 +17,15 @@ const rabbitSettings:any={
     password: password
 }
 
-export async function setupRabbitMQ() {
+export async function setupRabbitMQ(queueName: string, exchangeName: string, routingKey: string) {
     dotenv.config();
 
     const connection = await amqp.connect(rabbitSettings);
 
     const channel = await connection.createChannel();
 
-    const queueName = process.env.RABBITMQ_QUEUE_NAME || 'inventory-queue';
-    const exchangeName = process.env.RABBITMQ_EXCHANGE_NAME || 'order-exchange';
-    const routingKey = process.env.RABBITMQ_ROUTING_KEY || 'order-created';
-
-    await channel.assertQueue(queueName);
+    await channel.assertQueue(queueName, { durable: true });
     await channel.bindQueue(queueName, exchangeName, routingKey);
 
-    return { connection, channel, queueName };
+    return {channel};
 }

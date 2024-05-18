@@ -1,4 +1,3 @@
-import amqp from 'amqplib';
 import { RabbitMQReceiver } from "../../domain/services/RabbitMQReceiver";
 import {Signale} from "signale";
 import { setupRabbitMQ } from '../config/RabbitConfig';
@@ -7,7 +6,9 @@ import { Order } from '../../domain/model/Order';
 
 
 export class RabbitMQTrackingReceiver implements RabbitMQReceiver {
-
+    private queueName: string = process.env.RABBIT_QUEUE_TRACKING || 'default';
+    private exchangeName: string = process.env.RABBIT_EXCHANGE_TRACKING || 'default';
+    private routingKey: string = process.env.RABBIT_ROUTING_KEY_TRACKING || 'default';
 
     constructor(readonly useCase:DecreaceSoldProductUseCase) {
 
@@ -16,12 +17,11 @@ export class RabbitMQTrackingReceiver implements RabbitMQReceiver {
     async receive(): Promise<void> {
         const signale = new Signale();
         try {
-            const { connection, channel, queueName } = await setupRabbitMQ();
-            await channel.assertQueue(queueName, { durable: true });
+            const { channel } = await setupRabbitMQ(this.queueName, this.exchangeName, this.routingKey);
 
-            signale.info(`Waiting for messages in ${queueName}`);
+            signale.info(`Waiting for messages in inventory-queue.`);
             
-            channel.consume(queueName, (msg) => {
+            channel.consume(this.queueName, (msg) => {
                 if (msg) {
                     signale.info('Message received:', msg.content.toString());
                     const content:any = JSON.parse(msg.content.toString()) as Order;
@@ -37,10 +37,6 @@ export class RabbitMQTrackingReceiver implements RabbitMQReceiver {
         } catch (error) {
             signale.error('Error receiving message:', error);
         }
-    }
-
-    private async setupRabbitMQ(){
-        return await setupRabbitMQ();
     }
 
 }

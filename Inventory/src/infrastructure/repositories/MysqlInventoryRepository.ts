@@ -5,24 +5,21 @@ import { InventoryInterface } from "../../domain/port/InventoryInterface";
 export class MysqlInventoryRepository implements InventoryInterface {
 
     async decreaseStock(uuid: string, stock: number): Promise<Inventory | null> {
-        console.log(uuid, stock);
         try{
             let product = await this.findByUuid(uuid);
-            console.log(product);
             if(product){
-                console.log(product);
                 product.stock -= stock;
-                console.log(product);
+                if (product.stock < 0) {
+                    product.stock = 0;
+                }
                 let sql = `UPDATE inventories SET stock = ? WHERE uuid = ?`;
                 let params = [product.stock, product.uuid];
                 await query(sql, params);
                 return product;
             }else{
-                console.log("nadota");
                 return Promise.resolve(null);
             }
         }catch(error){
-            console.log(error);
             return Promise.resolve(null);
         }
     }
