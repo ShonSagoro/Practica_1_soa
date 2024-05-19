@@ -1,5 +1,5 @@
 package com.soa.orders.domain.service;
 
-public interface RabbitMQSender {
+public interface ITrackingSaga {
     void sendMessage(Object message);
 }

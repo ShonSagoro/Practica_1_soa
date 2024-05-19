@@ -60,7 +60,7 @@ public class OrderRepository implements IOrderRepository {
     }
 
     @Override
-    public Order findByUuidOrder(String uuid) {
+    public Order findByUuid(String uuid) {
         return jpaRepository.findByUuid(uuid).map(orderMapper::toDomain).orElseThrow(EntityNotFoundException::new);
     }
 }

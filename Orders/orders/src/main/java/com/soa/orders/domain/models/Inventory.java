@@ -1,15 +1,12 @@
-package com.soa.orders.application.dtos.response;
+package com.soa.orders.domain.models;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class OrderProductResponse {
+public class Inventory {
     private String uuid;
-
     private String name;
-
     private long price;
-
     private int stock;
 }

@@ -12,4 +12,5 @@ public class OrderResponse {
     private String date;
     private String status;
     private List<OrderProductResponse> products;
+    private List<InventoryResponse> inventories;
 }

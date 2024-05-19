@@ -1,5 +1,5 @@
 import { RabbitMQReceiver } from "../../domain/services/RabbitMQReceiver";
-import {Signale} from "signale";
+import { Signale } from "signale";
 import { setupRabbitMQ } from '../config/RabbitConfig';
 import { DecreaceSoldProductUseCase } from '../../application/useCases/DecreaseSoldStockUseCases';
 import { Order } from '../../domain/model/Order';

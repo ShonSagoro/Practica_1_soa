@@ -11,5 +11,5 @@ public interface IOrderRepository {
     List<Order> getOrders();
     Order save(Order order);
     OrderProduct saveOrderProduct(OrderProduct orderProduct, String orderUuid);
-    Order findByUuidOrder(String uuid);
+    Order findByUuid(String uuid);
 }

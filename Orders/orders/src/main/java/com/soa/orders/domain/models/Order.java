@@ -20,4 +20,6 @@ public class Order {
 
     private List<OrderProduct> products;
 
+    private List<Inventory> inventories;
+
 }

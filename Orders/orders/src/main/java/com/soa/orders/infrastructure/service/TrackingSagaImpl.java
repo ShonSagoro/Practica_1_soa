@@ -1,13 +1,13 @@
 package com.soa.orders.infrastructure.service;
 
-import com.soa.orders.domain.service.RabbitMQSender;
+import com.soa.orders.domain.service.ITrackingSaga;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SagaSenderTracking implements RabbitMQSender {
+public class TrackingSagaImpl implements ITrackingSaga {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
@@ -16,11 +16,6 @@ public class SagaSenderTracking implements RabbitMQSender {
 
     @Value("${rabbitmq.routing.key.tracking}")
     private String OrderRoutingKey;
-
-    @Autowired
-    public void MessageSender(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-    }
 
     @Override
     public void sendMessage(Object message) {

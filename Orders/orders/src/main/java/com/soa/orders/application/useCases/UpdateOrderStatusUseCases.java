@@ -7,9 +7,8 @@ import com.soa.orders.application.dtos.response.OrderResponse;
 import com.soa.orders.domain.models.Order;
 import com.soa.orders.domain.models.enums.Status;
 import com.soa.orders.domain.port.IOrderRepository;
-import com.soa.orders.domain.service.RabbitMQSender;
+import com.soa.orders.domain.service.ITrackingSaga;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +21,13 @@ public class UpdateOrderStatusUseCases {
     private IOrderDtoMapper orderDtoMapper;
 
     @Autowired
-    private RabbitMQSender rabbitMQSender;
+    private ITrackingSaga iTrackingSaga;
 
     public BaseResponse excuse(String uuid, UpdateOrderStatusRequest request) {
         Order order = orderRepository.updateOrderStatus(uuid, request.getStatus());
         OrderResponse response = orderDtoMapper.toResponse(order);
         if (response.getStatus().equals(Status.SENT.name())){
-            rabbitMQSender.sendMessage(response);
+            iTrackingSaga.sendMessage(response);
         }
         return BaseResponse.builder()
                 .data(response)

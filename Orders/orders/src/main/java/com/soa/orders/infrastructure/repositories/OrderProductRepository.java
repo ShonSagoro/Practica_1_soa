@@ -29,7 +29,7 @@ public class OrderProductRepository implements IOrderProductRepository {
     @Override
     public OrderProduct save(OrderProduct orderProduct) {
         OrderProductEntity orderProductEntity = orderProductMapper.toEntity(orderProduct);
-        orderProductEntity.setOrder(orderMapper.toEntity(orderRepository.findByUuidOrder(orderProduct.getOrderUuid())));
+        orderProductEntity.setOrder(orderMapper.toEntity(orderRepository.findByUuid(orderProduct.getOrderUuid())));
         return orderProductMapper.toDomain(jpaRepository.save(orderProductEntity));
     }
 }
