@@ -6,7 +6,7 @@ import cors from 'cors';
 import {Signale} from "signale";
 
 import { setupInventoryEndpoints } from './infrastructure/endpoints/InventoryEndpoints';
-import { DecreaceSoldProductUseCaseService } from './infrastructure/Dependencies';
+import { DecreaceSoldProductUseCaseService, FindInventoriesByUuidUseCaseService } from './infrastructure/Dependencies';
 
 dotenv.config();
 
@@ -28,6 +28,7 @@ let server = null;
 
 async function startServer() {
     await DecreaceSoldProductUseCaseService();
+    await FindInventoriesByUuidUseCaseService();
     server = app.listen(PORT, HOST, () => {
         signale.success(`Server is running on http://${HOST}:${PORT}`);
     });

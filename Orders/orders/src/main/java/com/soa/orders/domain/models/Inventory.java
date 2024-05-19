@@ -7,6 +7,13 @@ import lombok.Setter;
 public class Inventory {
     private String uuid;
     private String name;
-    private long price;
-    private int stock;
+    private Integer price;
+    private Long stock;
+
+    public Inventory(String uuid, String name, Integer price, Long stock) {
+        this.uuid = uuid;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+    }
 }

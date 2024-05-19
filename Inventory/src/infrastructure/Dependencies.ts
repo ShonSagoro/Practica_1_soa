@@ -6,7 +6,9 @@ import { ListInventoryController } from './controllers/ListInventoryController';
 import { DeleteInventoryController } from './controllers/DeleteInventoryController';
 import { MysqlInventoryRepository } from './repositories/MysqlInventoryRepository';
 import { DecreaceSoldProductUseCase } from '../application/useCases/DecreaseSoldStockUseCases';
-import { RabbitMQTrackingReceiver } from './services/RabbitMQTrackingReceiver';
+import { TrackingSagaImpl } from './services/TrackingSagaImpl';
+import { FindInventoriesByUuidUseCases } from '../application/useCases/FindInventoriesByUuidUseCases';
+import { InventorySagaImpl } from './services/InventorySagaImpl';
 
 const database = new MysqlInventoryRepository();
 
@@ -20,6 +22,12 @@ export const deleteInventoryController = new DeleteInventoryController(deleteInv
 
 export async function DecreaceSoldProductUseCaseService() {
     const decreaseSoldStockUseCase = new DecreaceSoldProductUseCase(database);
-    const rabbitMQTrackingReceiver = new RabbitMQTrackingReceiver(decreaseSoldStockUseCase);
-    await rabbitMQTrackingReceiver.receive();    
+    const trackingSagaImpl = new TrackingSagaImpl(decreaseSoldStockUseCase);
+    await trackingSagaImpl.receive();    
+}
+
+export async function FindInventoriesByUuidUseCaseService() {
+    const findInventoriesByUuidUseCases = new FindInventoriesByUuidUseCases(database);
+    const inventorySagaImpl = new InventorySagaImpl(findInventoriesByUuidUseCases);
+    await inventorySagaImpl.sendInventory();
 }

@@ -1,9 +1,8 @@
-import { Inventory } from "../../domain/model/Inventory";
-import { InventoryInterface } from "../../domain/port/InventoryInterface";
+import { IInventoryRepository } from "../../domain/port/IInventoryRepository";
 import { BaseResponse } from "../dtos/response/BaseResponse";
 
 export class DecreaceSoldProductUseCase{
-    constructor(private repository: InventoryInterface){}
+    constructor(private repository: IInventoryRepository){}
     async execute(uuid:string,stock:number): Promise<BaseResponse>{
         let result = await this.repository.decreaseStock(uuid,stock);
         if(result){

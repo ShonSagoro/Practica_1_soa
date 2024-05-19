@@ -1,6 +1,7 @@
 package com.soa.orders.infrastructure.service;
 
 import com.soa.orders.application.dtos.request.FindByUuidSagaRequest;
+import org.springframework.amqp.core.Message;
 import com.soa.orders.application.dtos.response.FindByUuidSagaResponse;
 import com.soa.orders.application.dtos.response.InventoryResponse;
 import com.soa.orders.domain.models.Inventory;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;

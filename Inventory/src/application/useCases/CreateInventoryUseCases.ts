@@ -1,11 +1,11 @@
 import { CreateInventoryRequest } from './../dtos/request/CreateInventoryRequest';
 import { BaseResponse } from "../dtos/response/BaseResponse";
-import { InventoryInterface } from '../../domain/port/InventoryInterface';
+import { IInventoryRepository } from '../../domain/port/IInventoryRepository';
 import { Inventory } from '../../domain/model/Inventory';
 import { InventoryResponse } from '../dtos/response/InventoryResponse';
 
 export class CreateInventoryUsecases {
-    constructor(readonly repository: InventoryInterface) { }
+    constructor(readonly repository: IInventoryRepository) { }
 
     async execute(request: CreateInventoryRequest): Promise<BaseResponse> {
         let inventory = new Inventory(request.name, request.price, request.stock);

@@ -1,11 +1,11 @@
-import { RabbitMQReceiver } from "../../domain/services/RabbitMQReceiver";
+import { ITrackingSaga } from "../../domain/services/ITrackingSaga";
 import { Signale } from "signale";
 import { setupRabbitMQ } from '../config/RabbitConfig';
 import { DecreaceSoldProductUseCase } from '../../application/useCases/DecreaseSoldStockUseCases';
 import { Order } from '../../domain/model/Order';
 
 
-export class RabbitMQTrackingReceiver implements RabbitMQReceiver {
+export class TrackingSagaImpl implements ITrackingSaga {
     private queueName: string = process.env.RABBIT_QUEUE_TRACKING || 'default';
     private exchangeName: string = process.env.RABBIT_EXCHANGE_TRACKING || 'default';
     private routingKey: string = process.env.RABBIT_ROUTING_KEY_TRACKING || 'default';
@@ -17,9 +17,9 @@ export class RabbitMQTrackingReceiver implements RabbitMQReceiver {
     async receive(): Promise<void> {
         const signale = new Signale();
         try {
-            const { channel } = await setupRabbitMQ(this.queueName, this.exchangeName, this.routingKey);
+            const channel = await setupRabbitMQ(this.queueName, this.exchangeName, this.routingKey);
 
-            signale.info(`Waiting for messages in inventory-queue.`);
+            signale.info(`Waiting for messages in ${this.queueName}.`);
             
             channel.consume(this.queueName, (msg) => {
                 if (msg) {

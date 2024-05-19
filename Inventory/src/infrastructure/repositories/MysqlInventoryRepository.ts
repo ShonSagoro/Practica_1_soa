@@ -1,8 +1,8 @@
 import { query } from "../../database/mysqldb";
 import { Inventory } from "../../domain/model/Inventory";
-import { InventoryInterface } from "../../domain/port/InventoryInterface";
+import { IInventoryRepository } from "../../domain/port/IInventoryRepository";
 
-export class MysqlInventoryRepository implements InventoryInterface {
+export class MysqlInventoryRepository implements IInventoryRepository {
 
     async decreaseStock(uuid: string, stock: number): Promise<Inventory | null> {
         try{
@@ -41,14 +41,14 @@ export class MysqlInventoryRepository implements InventoryInterface {
         }
     }
 
-    async delete(uuid: string): Promise<void> {
+    async delete(uuid: string): Promise<boolean> {
         let sql = `DELETE FROM inventories WHERE uuid = ?`;
         let params = [uuid];
         try {
             await query(sql, params);
-            return Promise.resolve();
+            return Promise.resolve(true);
         } catch (error) {
-            throw new Error('Error deleting user');
+            return Promise.resolve(false);
         }
     }
 

@@ -1,7 +1,7 @@
 import amqp from 'amqplib';
 import dotenv from 'dotenv';
 
-
+dotenv.config();
 const hostname = process.env.RABBITMQ_HOST || 'localhost';
 const protocol = process.env.RABBITMQ_PROTOCOL;
 const user = process.env.RABBITMQ_USER;
@@ -18,14 +18,9 @@ const rabbitSettings: any = {
 }
 
 export async function setupRabbitMQ(queueName: string, exchangeName: string, routingKey: string) {
-    dotenv.config();
-
     const connection = await amqp.connect(rabbitSettings);
-
     const channel = await connection.createChannel();
-
     await channel.assertQueue(queueName, { durable: true });
     await channel.bindQueue(queueName, exchangeName, routingKey);
-
-    return {channel};
+    return channel;
 }

@@ -1,9 +1,9 @@
-import { InventoryInterface } from "../../domain/port/InventoryInterface";
+import { IInventoryRepository } from "../../domain/port/IInventoryRepository";
 import { BaseResponse } from "../dtos/response/BaseResponse";
 import { InventoryResponse } from "../dtos/response/InventoryResponse";
 
 export class ListInventoryUseCases {
-    constructor(readonly repository: InventoryInterface) { }
+    constructor(readonly repository: IInventoryRepository) { }
 
     async execute(): Promise<BaseResponse> {
         let result = await this.repository.list();

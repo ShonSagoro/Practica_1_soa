@@ -1,10 +1,10 @@
 import { Inventory } from './../../domain/model/Inventory';
 import { Collection } from "mongodb";
-import { InventoryInterface } from "../../domain/port/InventoryInterface";
+import { IInventoryRepository } from "../../domain/port/IInventoryRepository";
 import { connect } from "../../database/mongodb";
 
 
-export class MongoInventoryRepository implements InventoryInterface {
+export class MongoInventoryRepository implements IInventoryRepository {
     private collection!: Collection | any;
 
     constructor() {
@@ -26,8 +26,6 @@ export class MongoInventoryRepository implements InventoryInterface {
         }
         
     }
-
-
 
     async findByUuid(uuid: string): Promise<Inventory | null> {
         try{
@@ -53,12 +51,12 @@ export class MongoInventoryRepository implements InventoryInterface {
         }
     }
 
-    async delete(uuid: string): Promise<void> {
+    async delete(uuid: string): Promise<boolean> {
         try {
             this.collection.deleteOne({ uuid: uuid });
-            return Promise.resolve();
+            return Promise.resolve(true);
         } catch (error) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
     }
 
