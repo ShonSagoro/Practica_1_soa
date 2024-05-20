@@ -1,6 +1,5 @@
 package com.soa.orders.domain.port;
 
-import com.soa.orders.application.dtos.request.CreateOrderRequest;
 import com.soa.orders.domain.models.Order;
 import com.soa.orders.domain.models.OrderProduct;
 

@@ -7,7 +7,6 @@ import com.soa.orders.infrastructure.dao.OrderEntity;
 import com.soa.orders.infrastructure.dao.OrderProductEntity;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 
